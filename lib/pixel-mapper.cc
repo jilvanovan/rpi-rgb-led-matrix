@@ -208,7 +208,9 @@ public:
     } else {
       x = visible_width - x - 1;
       y = slab_height - y - 1;
+      // printf("%d",len(x));
     }
+    printf("/%d",x);
     *matrix_x = x;
     *matrix_y = base_y + y;
   }

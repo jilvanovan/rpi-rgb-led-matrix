@@ -61,8 +61,6 @@ out.save("text.png")
 
 tmp=Image.new("RGB",(96,32),(0,0,0))
 data=[]
-tmpf=Image.new("RGB",(96,32),(0,0,0))
-
 
 for b in range(0,31): #sumbu x
     for v in range(0,41): # sumbu y
@@ -74,27 +72,15 @@ for b in range(0,31): #sumbu x
         tmp.putpixel(coordinate2,col) #draw pixel from input picture
 print(data)
 
-tmp3=ImageOps.flip(tmp)
-tmp3.save("tmp3.png")
-
 for b in range(32,60): #sumbu x
     for v in range(0,41): # sumbu y
         coordinate = x,y = b,v
-        coordinate2= x,y = v,b-30
+        coordinate2= x,y = v+50,b-30
         col=out.getpixel(coordinate) #get pixel from the current picture
         print (out.getpixel(coordinate)) #print pixel from the current picture
-        # data.append(col)
+        data.append(col)
         tmp.putpixel(coordinate2,col) #draw pixel from input picture
-# print(data)
-
-for b in range(0,32):
-    for v in range (0,48):
-        coordinate3 = x,y = v,b
-        coordinate4= x,y = v,b-7
-        col=tmp3.getpixel(coordinate3) #get pixel from the current picture
-        # print (out.getpixel(coordinate)) #print pixel from the current picture
-        # data.append(col)
-        tmpf.putpixel(coordinate4,col) #draw pixel from input picture
+print(data)
 
 # for b in range(31,32): #sumbu x
 #     for v in range(0,47): # sumbu y
@@ -104,25 +90,15 @@ for b in range(0,32):
 #         print (out.getpixel(coordinate)) #print pixel from the current picture
 #         tmp.putpixel(coordinate2,col) #draw pixel from input picture
 
+
 tmp.save("tmp.png")
-tmp2=ImageOps.mirror(tmp)
-
-for b in range(0,32):
-    for v in range (48,96):
-        coordinate3 = x,y = v,b
-        coordinate4= x,y = v,b
-        col=tmp2.getpixel(coordinate3) #get pixel from the current picture
-        # print (out.getpixel(coordinate)) #print pixel from the current picture
-        # data.append(col)
-        tmpf.putpixel(coordinate4,col) #draw pixel from input picture
-
+tmp2=ImageOps.flip(tmp)
 tmp2.save("tmp2.png")
 # tmp=Image.new("RGB",(96,32),(0,0,0))
 # for 
-tmpf.save("tmpf.png")
 
 matrix.Clear()
-matrix.SetImage(tmpf, 0, 0)
-time.sleep(10)
+matrix.SetImage(tmp, 0, 0)
+# time.sleep(10)
 
 # matrix.Clear()
