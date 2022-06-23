@@ -29,7 +29,7 @@ options.rows = 16
 options.cols = 32
 options.chain_length = 6
 options.parallel = 1
-options.brightness=100
+options.brightness=10
 options.multiplexing=11
 options.pixel_mapper_config="V-mapper;Rotate:90"
 options.hardware_mapping = 'adafruit-hat'  # If you have an Adafruit HAT: 'adafruit-hat'
@@ -134,7 +134,7 @@ def fontdrawer2(input):
     d = ImageDraw.Draw(out)
 
     # draw multiline text
-    d.multiline_text((2, 4), input, font=fnt, fill=(0, 0, 255))
+    d.multiline_text((2, 4), input, font=fnt, fill=(0, 255, 0))
     # 
     # out.getpixel()
 
@@ -213,146 +213,16 @@ def fontdrawer2(input):
 # matrix.SetImage(tmpout, 0, 0)
 # time.sleep(10)
 
-def fontdrawer_double(input):
-        out = Image.new("RGB", (64, 48), (0, 0, 0))
-        # get a font
-        fnt = ImageFont.truetype("/home/pi/display16x32/rpi-rgb-led-matrix/bindings/python/samples/ab.ttf", 50)
-        # get a drawing context
-        d = ImageDraw.Draw(out)
-        buffint = int(input)
-        if buffint>0 and buffint < 20:
-            d.multiline_text((5, 5), input, font=fnt, fill=(0, 255, 0))
-        if buffint>=20 and buffint <= 40:
-            d.multiline_text((5, 5), input, font=fnt, fill=(0, 255, 255))
-        if buffint> 40:
-            d.multiline_text((5, 5), input, font=fnt, fill=(0, 0, 255))     
-
-        out.save("text.png")
-        tmp=Image.new("RGB",(96,32),(0,0,0))
-        data=[]
-        tmpf=Image.new("RGB",(96,32),(0,0,0))
-
-        for b in range(0,31): #sumbu x
-            for v in range(0,46): # sumbu y
-                coordinate = x,y = b,v
-                coordinate2= x,y = v,b-1
-                col=out.getpixel(coordinate) #get pixel from the current picture
-                data.append(col)
-                tmp.putpixel(coordinate2,col) #draw pixel from input picture
-    
-        tmp3=ImageOps.flip(tmp)
-        tmp3.save("tmp3.png")
-
-        for b in range(32,63): #sumbu x
-            for v in range(0,47): # sumbu y
-                coordinate = x,y = b,v
-                coordinate2= x,y = v,b-32
-                col=out.getpixel(coordinate) #get pixel from the current picture
-                tmp.putpixel(coordinate2,col) #draw pixel from input picture
-    
-        for b in range(0,31):
-            for v in range (0,47):
-                coordinate3 = x,y = v,b
-                coordinate4= x,y = v,b
-                col=tmp3.getpixel(coordinate3) #get pixel from the current picture
-                tmpf.putpixel(coordinate4,col) #draw pixel from input picture
-
-        tmp.save("tmp.png")
-        tmp2=ImageOps.mirror(tmp)
-
-        for b in range(0,31):
-            for v in range (47,96):
-                coordinate3 = x,y = v,b
-                coordinate4= x,y = v,b
-                col=tmp2.getpixel(coordinate3) #get pixel from the current picture
-                # print (out.getpixel(coordinate)) #print pixel from the current picture
-                # data.append(col)
-                tmpf.putpixel(coordinate4,col) #draw pixel from input picture
-
-        tmp2.save("tmp2.png")
-        tmpf.save("tmpf.png")
-        return tmpf
-
-def fontdrawer_single(input):
-        out = Image.new("RGB", (64, 48), (0, 0, 0))
-        # get a font
-        fnt = ImageFont.truetype("/home/pi/display16x32/rpi-rgb-led-matrix/bindings/python/samples/ab.ttf", 50)
-        # get a drawing context
-        d = ImageDraw.Draw(out)
-        buffint = int(input)
-        if buffint>0 and buffint < 20:
-            d.multiline_text((14, 5), input, font=fnt, fill=(0, 255, 0))
-        if buffint>20 and buffint < 40:
-            d.multiline_text((14, 5), input, font=fnt, fill=(0, 255, 255))
-        if buffint> 40:
-            d.multiline_text((14, 5), input, font=fnt, fill=(0, 0, 255))     
-
-        out.save("text.png")
-        tmp=Image.new("RGB",(96,32),(0,0,0))
-        data=[]
-        tmpf=Image.new("RGB",(96,32),(0,0,0))
-
-        for b in range(0,31): #sumbu x
-            for v in range(0,47): # sumbu y
-                coordinate = x,y = b,v
-                coordinate2= x,y = v,b-6
-                col=out.getpixel(coordinate) #get pixel from the current picture
-                data.append(col)
-                tmp.putpixel(coordinate2,col) #draw pixel from input picture
-    
-        tmp3=ImageOps.flip(tmp)
-        # tmp3.save("tmp3.png")
-
-        for b in range(32,63): #sumbu x
-            for v in range(0,47): # sumbu y
-                coordinate = x,y = b,v
-                coordinate2= x,y = v,b-32
-                col=out.getpixel(coordinate) #get pixel from the current picture
-                tmp.putpixel(coordinate2,col) #draw pixel from input picture
-    
-        for b in range(0,31):
-            for v in range (0,47):
-                coordinate3 = x,y = v,b
-                coordinate4= x,y = v,b-7
-                col=tmp3.getpixel(coordinate3) #get pixel from the current picture
-                tmpf.putpixel(coordinate4,col) #draw pixel from input picture
-
-        # tmp.save("tmp.png")
-        tmp2=ImageOps.mirror(tmp)
-
-        for b in range(0,31):
-            for v in range (47,96):
-                coordinate3 = x,y = v,b
-                coordinate4= x,y = v,b
-                col=tmp2.getpixel(coordinate3) #get pixel from the current picture
-                # print (out.getpixel(coordinate)) #print pixel from the current picture
-                # data.append(col)
-                tmpf.putpixel(coordinate4,col) #draw pixel from input picture
-
-        # tmp2.save("tmp2.png")
-        # tmpf.save("tmpf.png")
-        return tmpf
-
 while True:
-    for data in range (0,9):
+    for data in range(100,200):
         tmpout=Image.new("RGB",(96,32),(0,0,0))
-        tmpout=fontdrawer_single(str(data))
+        tmpout=fontdrawer2(str(data))
         matrix.Clear()
-        matrix.SetImage(tmpout, 0, 0)  
-    for data in range (10,100):
+        matrix.SetImage(tmpout, 0, 0)    
+    for data in reversed(range(100,200)):
         tmpout=Image.new("RGB",(96,32),(0,0,0))
-        tmpout=fontdrawer_double(str(data))
+        tmpout=fontdrawer2(str(data))
         matrix.Clear()
-        matrix.SetImage(tmpout, 0, 0)           
-    # for data in range(100,200):
-    #     tmpout=Image.new("RGB",(96,32),(0,0,0))
-    #     tmpout=fontdrawer2(str(data))
-    #     matrix.Clear()
-    #     matrix.SetImage(tmpout, 0, 0)    
-    # for data in reversed(range(100,200)):
-    #     tmpout=Image.new("RGB",(96,32),(0,0,0))
-    #     tmpout=fontdrawer2(str(data))
-    #     matrix.Clear()
-    #     matrix.SetImage(tmpout, 0, 0)   
+        matrix.SetImage(tmpout, 0, 0)   
 
 # matrix.Clear()
